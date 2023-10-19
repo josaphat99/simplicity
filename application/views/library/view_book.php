@@ -51,14 +51,21 @@
                 </div>
             </div>
                 <!-- events -->
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <button class="btn btn-outline-success btn-lg" data-toggle="modal" data-target="#newBookForm">
-                        <i class="fas fa-plus"></i> &nbsp;Add a book
-                    </button>
-                </div>
-            </div>
-            <br>
+            <?php
+                if($this->session->role == 'librarian')
+                {
+            ?>           
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-outline-success btn-lg" data-toggle="modal" data-target="#newBookForm">
+                                <i class="fas fa-plus"></i> &nbsp;Add a book
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+            <?php
+                }
+            ?>
             <div class="card card-success">
                 <div class="card-body">                    
                     <div class="row">

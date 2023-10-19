@@ -60,30 +60,61 @@ class Crud extends CI_Model
 		return $this->db->get()->result();
 	}
 
+	//join account, student, option, grade
+
+	public function join_student_account_option_grade($student_id=null)
+	{
+		$this->db->select("*, account.id as id, student.id as id_student, option.id as id_option, grade.id as id_grade")
+				 ->from('account')
+				 ->join('student','account.student_id = student.id')
+				 ->join('option','student.option_id = option.id')
+				 ->join('grade','option.grade_id = grade.id')
+				 ->order_by('account.id','DESC')
+				 ->where(['role'=>'student']);
+		
+				 if($student_id != null)
+				 {
+					$this->db->where(['account.id'=>$student_id]);
+				 }
+		
+		return $this->db->get()->result();
+	}
+
 	
 	//join request, books and user
 
-	public function join_reading_book_account($status, $request_id=null)
+	public function join_reading_book_account($status=null,$request_id=null,$book_id=null,$limit=null,$account_id=null)
 	{
-		$where = '';
-
-		if($request_id != null)
-		{
-			$where = ['status'=>$status,'reading.id'=>$request_id];
-		}else{
-			$where = ['status'=>$status];
-		}
 
 		$this->db->select("*, reading.id as id, account.id as id_student,book.id as id_book")
 				 ->from('reading')
 				 ->join('account','reading.user_id = account.id')
 				 ->join('book','reading.book_id = book.id')
 				 ->order_by('reading.id','DESC')
-				 ->limit(5)
-				 ->where($where );
+				 ->limit($limit);
+
+		if($request_id != null)
+		{
+			$this->db->where(['reading.id'=>$request_id]); 
+		}
+
+		if($status != null)
+		{
+			$this->db->where(['status'=>$status]);
+		}elseif($status == '0'){
+			$this->db->where(['status'=>$status]);
+		}
+
+		if($book_id != null)
+		{
+			$this->db->where(['book.id'=>$book_id]);
+		}
+
+		if($account_id != null)
+		{
+			$this->db->where(['account.id'=>$account_id]);
+		}
 		
 		return $this->db->get()->result();
-	}
-
-
+	}	
 }  

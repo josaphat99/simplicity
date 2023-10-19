@@ -26,7 +26,7 @@
               <div class="col-lg-8 offset-lg-2 col-md-12 col-12 col-sm-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Grades</h4>
+                    <h4>Years</h4>
                     <!-- <div class="card-header-action">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newTeacherForm">
                          <i class="fas fa-plus"></i>&nbsp; New grade
@@ -37,7 +37,7 @@
                     <div class="table-responsive">
                       <table class="table table-striped">
                         <tr class="text-center">
-                          <th>Grade</th>
+                          <th>Year</th>
                           <th>Nb. of Options</th>
                           <th>Total number of Students</th>
                           <th>Action</th>

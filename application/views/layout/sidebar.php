@@ -18,7 +18,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="<?=site_url('admin/view_grade')?>" class="nav-link">
-                            <i class="fas fa-graduation-cap"></i><span>Grades</span>
+                            <i class="fas fa-graduation-cap"></i><span>Years</span>
                         </a>
                     </li>
             <?php
@@ -37,6 +37,46 @@
                             <li><a class="nav-link" href="<?=site_url('library/view_pending_request')?>">Pending requests</a></li>
                             <li><a class="nav-link" href="<?=site_url('library/view_issued_book')?>">Issued books</a></li>
                         </ul>
+                    </li>
+            <?php
+                }else if($this->session->role == 'student')
+                {
+            ?>
+                    <li class="dropdown active">
+                        <a href="<?=site_url('student/index')?>" class="nav-link">
+                        &nbsp;&nbsp;<i data-feather="monitor"></i><span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-book"></i><span>Books</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="<?=site_url('library/view_book')?>">All books</a></li>
+                            <li><a class="nav-link" href="<?=site_url('student/view_pending_request')?>">Pending requests</a></li>
+                            <li><a class="nav-link" href="<?=site_url('student/view_issued_book')?>">Issued books</a></li>
+                        </ul>
+                    </li>
+            <?php
+                }
+                else if($this->session->role == 'teacher')
+                {
+            ?>
+                    <li class="dropdown active">
+                        <a href="<?=site_url('teacher/index')?>" class="nav-link">
+                        &nbsp;&nbsp;<i data-feather="monitor"></i><span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-graduation-cap"></i><span>Assignments</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="<?=site_url('teacher/list_test')?>" class="nav-link">
+                            <i class="fas fa-graduation-cap"></i><span>Tests</span>
+                        </a>
                     </li>
             <?php
                 }

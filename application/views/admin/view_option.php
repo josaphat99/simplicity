@@ -19,17 +19,15 @@
  <div class="main-content">
     <section class="section">
         <div class="section-body">
-           
-
             <!-- grade table -->
             <div class="row">
               <div class="col-lg-8 offset-lg-2 col-md-12 col-12 col-sm-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Options</h4>
+                    <h4>Programs</h4>
                     <div class="card-header-action">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newOptionForm">
-                         <i class="fas fa-plus"></i>&nbsp; New Option
+                         <i class="fas fa-plus"></i>&nbsp; New Program
                         </button>
                     </div>
                   </div>
@@ -37,7 +35,7 @@
                     <div class="table-responsive">
                       <table class="table table-striped">
                         <tr class="text-center">
-                          <th>Option</th>
+                          <th>Program</th>
                           <th>Total number of Students</th>
                           <th>Action</th>
                         </tr>

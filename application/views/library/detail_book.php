@@ -12,18 +12,18 @@
         </script>
 <?php
     $this->session->book_returned = null;
-    }if($this->session->event_not_added){
+    }if($this->session->request_submitted){
 ?>
         <script>
             Swal.fire({            
-            icon: 'error',
-            title: 'Oups! Something went wrong',
+            icon: 'success',
+            title: 'Your request has been submitted!',
             showConfirmButton: false,
             timer: 3000
             })
         </script>
 <?php
-    $this->session->event_added = null;
+    $this->session->request_submitted = null;
     }
 ?>
 
@@ -80,18 +80,18 @@
                                                         $action_btn = 'View details';
                                                         $href = 'library/view_pending_request?request_id='.$request->id;
                                             ?>
-                                                <p class="badge badge-info text-white animated check infinite" style="margin-left:-35px">Pending request!</p>
+                                                <p class="badge badge-info text-white animated check infinite" style="margin-left:-35px"><?=$this->session->role=='librarian'?'Pending request!':'Available'?></p>
                                             <?php
                                                     }else if($request->status == 1)
                                                     {
                                                         $action_btn = 'View details';
-                                                        $href = 'library/view_issued_request?request_id='.$request->id;
+                                                        $href = 'library/view_issued_book?request_id='.$request->id;
                                             ?>
                                                         <p class="badge badge-info text-white animated check infinite">Issued!</p>
                                             <?php
                                                     }else{
                                                         $action_btn = 'Latest requests';
-                                                        $href = 'library/latest_request';
+                                                        $href = 'library/latest_request?book_id='.$book->id;
                                             ?>
                                                         <p class="badge badge-info text-white animated check infinite">Available!</p>
                                             <?php
@@ -108,8 +108,51 @@
                                     </p>
                                     
                                     <div class="row">                                        
-                                        <div class="col-md-6 offset-md-4">
-                                            <a href=<?=site_url($href)?> class="btn btn-success"><?=$action_btn?></a>
+                                        <div class="col-md-10 offset-md-2">
+                                            <?php
+                                                if($this->session->role == 'librarian')
+                                                {
+                                            ?>
+                                                <a href=<?=site_url($href)?> class="btn btn-success"><?=$action_btn?></a>
+                                            <?php
+                                                }else if($this->session->role == 'student')
+                                                {
+                                                    if($request->status == 0){
+                                                        if($request->user_id == $this->session->id){
+                                                ?>
+                                                                <p class="alert alert-info  text-white">Your Request is in pending verification!</p>
+                                                <?php
+                                                        }else{
+                                                ?>
+                                                                <a href=<?=site_url('student/request_book?book_id='.$request->book_id)?> class="btn btn-success">Request this book</a>
+                                                <?php
+                                                        }
+                                                    }elseif($request->status == 1)
+                                                    {
+                                                        if($request->user_id == $this->session->id)
+                                                        {
+                                                ?>
+                                                    <p class="alert alert-info text-white">You should return this book on <br/><?=$request->deadline?></p>
+
+                                                <?php
+                                                        }else{
+                                                ?>
+                                                    <p class="alert alert-info text-white">This book will be available on <br/><?=$request->deadline?></p>
+
+                                                <?php
+                                                        }
+                                                ?>
+                                                <?php
+                                                    }else{
+                                                        ?>
+                                                <a href=<?=site_url('student/request_book?book_id='.$request->book_id)?> class="btn btn-success">Request this book</a>
+
+                                                        <?php
+                                                    }
+                                            ?>                                                
+                                            <?php
+                                                }
+                                            ?>
                                         </div>
                                     </div>
                                 </div>

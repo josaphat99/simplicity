@@ -74,14 +74,15 @@ class Library extends CI_Controller
     {
         /**
          * Request statuses
-         * 0 : available
+         * 0 : pending
          * 1: issued
-         * 2: archived
+         * 2: rejected
+         * 3: returned
          */
         $book_id = $this->input->get('book_id');
 
         $book = $this->Crud->get_data('book',['id'=>$book_id]);
-        $request = $this->Crud->get_data('reading',['book_id'=>$book_id]);
+        $request = $this->Crud->get_data_desc('reading',['book_id'=>$book_id]);
 
         $d['book'] = count($book) > 0?$book[0] : null;
         $d['request'] = count($request) > 0?$request[0] : null;
@@ -140,7 +141,6 @@ class Library extends CI_Controller
             $d['request'] = $this->Crud->join_reading_book_account(0);
         }
 
-
         $this->load->view('library/view_pending_request',$d);
         $this->load->view('layout/footer');
         $this->load->view('layout/js');
@@ -168,8 +168,10 @@ class Library extends CI_Controller
         $request_id = $this->input->get('request_id');
         $action = $this->input->get('action');
 
+        $book_id = $this->Crud->get_data('reading',['id'=>$request_id])[0]->book_id;
+
         if($action == 'issue')
-        {
+        {            
             //work on dates
             $issueing_date = date('d-m-Y',time());
             $issueing_date_tmp = strtotime($issueing_date);
@@ -179,6 +181,9 @@ class Library extends CI_Controller
             $this->Crud->update_data('reading',['id'=>$request_id],['status'=>1]);
             $this->Crud->update_data('reading',['id'=>$request_id],['issueing_date'=>$issueing_date]);
             $this->Crud->update_data('reading',['id'=>$request_id],['deadline'=>$deadline]);
+
+            //reject all other request for this book
+            $this->Crud->update_data('reading',['id !='=>$request_id,'book_id'=>$book_id],['status'=>2]);
 
             $this->session->set_flashdata(['book_issued'=>true]);
 
@@ -204,5 +209,20 @@ class Library extends CI_Controller
         $this->session->set_flashdata(['book_returned'=>true]);
 
         redirect('library/detail_book?book_id='.$book_id);
+    }
+
+    public function latest_request()
+    {
+        $book_id = $this->input->get('book_id');
+
+        $req = $this->Crud->join_reading_book_account(null,null,$book_id);
+
+        $d = [
+            'request' => $req
+        ];
+
+        $this->load->view('library/latest_request',$d);
+        $this->load->view('layout/footer');
+        $this->load->view('layout/js');
     }
 }

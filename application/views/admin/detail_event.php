@@ -42,7 +42,10 @@
                 <div class="card card-success">
                     <div class="card-header">
                         <h4><?=$event[0]->title?></h4>
-
+                        <?php
+                            if($this->session->role == 'admin')
+                            {
+                        ?>                        
                         <div class="card-header-action">
                             <a href="<?=site_url('admin/edit_event?event_id='.$event[0]->id)?>" class="btn btn-info">
                                 <i class="fas fa-edit"></i>
@@ -57,6 +60,9 @@
                                 </button>&nbsp;&nbsp;
                             </form>
                         </div>
+                        <?php
+                            }
+                        ?>
                     </div>
                    
 
