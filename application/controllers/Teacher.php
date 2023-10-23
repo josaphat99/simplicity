@@ -77,9 +77,14 @@ class Teacher extends CI_Controller
         $test_id = $this->input->get('test_id');
 
         $test = $this->Teacher_model->get_test_teacher(null,null,$test_id);
+        $course = $this->Crud->get_data('course',['id'=>$test[0]->course_id])[0];
+        $option_id = $this->Crud->get_data('option',['id'=>$course->option_id])[0]->id;
+
+        $student = $this->Crud->join_account_student($option_id);
         
         $d = [
             'test' => $test,   
+            'student' => $student,
         ];
 
         $this->load->view('teacher/view_test_detail',$d);
@@ -105,4 +110,48 @@ class Teacher extends CI_Controller
  
          redirect('teacher/list_test');
      }
+
+     //record points
+     public function record_point()
+    {
+        $test_id = $this->input->post('test_id');
+
+        $test = $this->Teacher_model->get_test_teacher(null,null,$test_id);
+        $course = $this->Crud->get_data('course',['id'=>$test[0]->course_id])[0];
+        $option_id = $this->Crud->get_data('option',['id'=>$course->option_id])[0]->id;
+
+        $student = $this->Crud->join_account_student($option_id);
+
+        $point_provided = false;
+
+        foreach($student as $s)
+        {
+            $mark = $this->input->post($s->id_student);
+
+            if($mark != null)
+            {
+                $point_provided = true;
+
+                $this->Crud->add_data('result_test',[
+                    'student_id' => $s->id_student,
+                    'test_id' => $this->input->post($test_id),
+                    'mark' =>$mark,
+                    'date' => date('d-m-Y',time())                
+                ]);
+            }else{
+                continue;
+            }         
+        }
+
+        if($point_provided)
+        {
+            $this->Crud->update_data('assignment',['id'=>$test_id],['status'=>1]);
+
+            $this->session->set_flashdata(['point_recorded'=>true]);
+        }else{
+            $this->session->set_flashdata(['point_not_recorded'=>true]);
+        }
+ 
+        redirect('teacher/view_test_detail?test_id='.$test_id);
+    }
 }
