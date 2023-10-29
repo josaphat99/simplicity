@@ -168,6 +168,66 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row animated fadeIn" id="student_grade" hidden>
+                <div class="col-lg-12 col-md-12 col-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <h4 class="text-white">Student Points</h4>
+
+                            <div class="card-header-action">
+                                <a data-collapse="#grade-collapse" class="btn btn-icon btn-info" href="#"><i
+                                class="fas fa-minus"></i></a>
+                            </div>
+                        </div>
+                        <div class="collapse show" id="grade-collapse">
+                            <div class="card-body">
+                                </<>
+                                <div class="row">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7 offset-md-3">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered">
+                                                <tr class="bg-info text-white text-center">
+                                                    <th>N0</th>
+                                                    <th>Full Name</th>
+                                                    <th>Point</th>
+                                                </tr>
+                                                <tbody>                 
+                                                    <form action="<?=site_url('teacher/record_point')?>" method="post">
+                                                    <?php
+                                                        $num = 0;
+                                                        foreach($student as $s)
+                                                        {
+                                                            $num++;
+                                                    ?>  
+                                                    <tr class="text-center">                                  
+                                                        <td><?=$num?></td>
+                                                        <td><?=$s->fullname?></td>
+                                                            
+                                                        <td>
+                                                            <input class="form-control" type="number" name="<?=$s->id_student?>" placeholder="Point">
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    <input type="hidden" name="test_id" value="<?=$test[0]->id?>">
+                                                </tbody>
+                                            </table>
+                                            <div class="col-md-12 text-center">
+                                                <button type="submit" class="btn btn-success btn-lg">Save</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
