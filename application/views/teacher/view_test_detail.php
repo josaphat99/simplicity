@@ -169,7 +169,12 @@
                 </div>
             </div>
 
-            <div class="row animated fadeIn" id="student_grade" hidden>
+            <!--Student grades displayed after the teacher provides the points-->
+            <?php
+                if(count($result_test) > 0)
+                {
+            ?>
+            <div class="row animated fadeIn" id="student_grade">
                 <div class="col-lg-12 col-md-12 col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header bg-info">
@@ -195,31 +200,22 @@
                                                     <th>Point</th>
                                                 </tr>
                                                 <tbody>                 
-                                                    <form action="<?=site_url('teacher/record_point')?>" method="post">
                                                     <?php
                                                         $num = 0;
-                                                        foreach($student as $s)
+                                                        foreach($result_test as $r)
                                                         {
                                                             $num++;
                                                     ?>  
                                                     <tr class="text-center">                                  
                                                         <td><?=$num?></td>
-                                                        <td><?=$s->fullname?></td>
-                                                            
-                                                        <td>
-                                                            <input class="form-control" type="number" name="<?=$s->id_student?>" placeholder="Point">
-                                                        </td>
+                                                        <td><?=$r->fullname?></td>
+                                                        <td><?=$r->mark?></td>
                                                     </tr>
                                                     <?php
                                                     }
                                                     ?>
-                                                    <input type="hidden" name="test_id" value="<?=$test[0]->id?>">
                                                 </tbody>
                                             </table>
-                                            <div class="col-md-12 text-center">
-                                                <button type="submit" class="btn btn-success btn-lg">Save</button>
-                                            </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -228,6 +224,9 @@
                     </div>
                 </div>
             </div>
+            <?php
+                }
+            ?>
         </div>
     </section>
 

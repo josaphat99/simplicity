@@ -45,6 +45,26 @@ class Teacher_model extends CI_Model
 		return $this->db->get()->result();
 	}
 
+	//get test results
+	public function get_test_result($teacher_id=null,$limit=null,$test_id=null)
+	{
+		$this->db->select("*, assignment.id as id, assignment.title as title")
+					->from('assignment')
+					->join('result_test','result_test.test_id = assignment.id')
+					->join('student','result_test.student_id = student.id')
+					->join('account','student.id = account.student_id')
+					->order_by('account.fullname','ASC')
+					->limit($limit)
+					->where(['result_test.test_id'=>$test_id]);
+
+		if($teacher_id != null)
+		{
+			$this->db->where(['account.id'=>$teacher_id]);
+		}					
+		
+		return $this->db->get()->result();
+	}
+
 	//get courses
 	public function get_course_teacher($teacher_id)
 	{

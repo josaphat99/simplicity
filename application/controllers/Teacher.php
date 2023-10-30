@@ -80,11 +80,21 @@ class Teacher extends CI_Controller
         $course = $this->Crud->get_data('course',['id'=>$test[0]->course_id])[0];
         $option_id = $this->Crud->get_data('option',['id'=>$course->option_id])[0]->id;
 
-        $student = $this->Crud->join_account_student($option_id);
-        
+        $result_test = $this->Teacher_model->get_test_result(null,null,$test_id);
+
+        // var_dump($result_test);die();
+
+        if(count($result_test) <= 0)
+        {
+            $student = $this->Crud->join_account_student($option_id);
+        }else{
+            $student = [];
+        }
+                
         $d = [
             'test' => $test,   
             'student' => $student,
+            'result_test' => $result_test
         ];
 
         $this->load->view('teacher/view_test_detail',$d);
@@ -114,7 +124,7 @@ class Teacher extends CI_Controller
      //record points
      public function record_point()
     {
-        $test_id = $this->input->post('test_id');
+        $test_id = $this->input->post('test_id');        
 
         $test = $this->Teacher_model->get_test_teacher(null,null,$test_id);
         $course = $this->Crud->get_data('course',['id'=>$test[0]->course_id])[0];
@@ -134,7 +144,7 @@ class Teacher extends CI_Controller
 
                 $this->Crud->add_data('result_test',[
                     'student_id' => $s->id_student,
-                    'test_id' => $this->input->post($test_id),
+                    'test_id' => $this->input->post('test_id'),
                     'mark' =>$mark,
                     'date' => date('d-m-Y',time())                
                 ]);
