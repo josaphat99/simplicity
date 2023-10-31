@@ -97,6 +97,16 @@
                                     </div>
                                 </div>
                                 <?php
+                                    }else{
+                                        ?>
+                                <div class="row">
+                                    <div class="col-md-4 offset-md-4">
+                                        <div class="col-md-12 text-center">
+                                            <button class="btn btn-success" id="view_statistic">View statistics</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
                                     }
                                 ?>
                             </div>
@@ -191,13 +201,15 @@
                                 <div class="row">
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-7 offset-md-3">
+                                    <div class="col-md-7 offset-md-2">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered">
                                                 <tr class="bg-info text-white text-center">
                                                     <th>N0</th>
                                                     <th>Full Name</th>
-                                                    <th>Point</th>
+                                                    <th>Obtained Point</th>
+                                                    <th>Points in %</th>
+                                                    <th>Note</th>
                                                 </tr>
                                                 <tbody>                 
                                                     <?php
@@ -205,11 +217,36 @@
                                                         foreach($result_test as $r)
                                                         {
                                                             $num++;
+
+                                                            $note = 'E';
+                                                            $percent = 0;
+
+                                                            if($r->mark != null)
+                                                            {
+                                                                $percent = $r->mark * 100 / $r->max_mark;
+
+                                                                if($percent >= 45 && $percent <= 54)
+                                                                {
+                                                                    $note = 'D';
+                                                                }else if($percent >= 55 && $percent <= 64)
+                                                                {
+                                                                    $note = 'C';
+                                                                }
+                                                                else if($percent >= 65 && $percent <= 74)
+                                                                {
+                                                                    $note = 'B';
+                                                                }else if($percent >= 75 && $percent <= 100)
+                                                                {
+                                                                    $note = 'A';
+                                                                }
+                                                            }
                                                     ?>  
                                                     <tr class="text-center">                                  
                                                         <td><?=$num?></td>
                                                         <td><?=$r->fullname?></td>
                                                         <td><?=$r->mark!=null?$r->mark:'<span style="color:red;font-weight:bold">Absent</span>'?></td>
+                                                        <td><?=$percent?>%</td>
+                                                        <td><?=$note?></td>
                                                     </tr>
                                                     <?php
                                                     }
