@@ -109,12 +109,105 @@
                                 <?php
                                     }
                                 ?>
+                                <div id="statistic_area" class="row animated fadeIn" hidden>
+                                    <div class="col-md-6">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-sm">
+                                                <tr class="bg-info text-white text-center">
+                                                    <th colspan="4">Participants</th>
+                                                </tr>
+                                                <tr class="bg-light text-center">
+                                                    <th>Gender</th>
+                                                    <th>N0 in Class</th>
+                                                    <th>N0 Sat.</th>
+                                                    <th>N0 Absent</th>
+                                                </tr>
+                                                <tbody>                 
+                                                   <tr class="text-center">
+                                                        <th>M</th>
+                                                        <td>32</td>
+                                                        <td>28</td>
+                                                        <td>4</td>
+                                                   </tr>
+                                                   <tr class="text-center">
+                                                        <th>F</th>
+                                                        <td>20</td>
+                                                        <td>17</td>
+                                                        <td>3</td>
+                                                   </tr>
+                                                   <tr class="bg-light text-center">
+                                                        <th>Total</th>
+                                                        <td>52</td>
+                                                        <td>45</td>
+                                                        <td>7</td>
+                                                   </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-sm">
+                                                <tr class="bg-info text-white text-center">
+                                                    <th colspan="8">Results</th>
+                                                </tr>
+                                                <tr class="bg-light text-center">                                                    
+                                                    <th colspan="5">Passed</th>
+                                                    <th>Failed</th>
+                                                    <th colspan="2">Pass %</th>
+                                                </tr>
+                                                <tbody>                 
+                                                   <tr class="bg-secondary text-center">
+                                                        <th>Gender</th>
+                                                        <th>A</th>
+                                                        <th>B</th>
+                                                        <th>C</th>
+                                                        <th>D</th>
+                                                        <th>E</th>
+                                                        <th>A-B</th>
+                                                        <th>C-D</th>
+                                                   </tr>
+                                                   <tr class="text-center">
+                                                        <th>M</th>                                                        
+                                                        <td>17</td>
+                                                        <td>3</td>
+                                                        <td>3</td>
+                                                        <td>3</td>
+                                                        <td>3</td>
+                                                        <td>3</td>
+                                                        <td>3</td>
+                                                   </tr>
+                                                   <tr class="text-center">
+                                                        <th>F</th>
+                                                        <td>52</td>
+                                                        <td>45</td>
+                                                        <td>7</td>
+                                                        <td>7</td>
+                                                        <td>7</td>
+                                                        <td>45</td>
+                                                        <td>45</td>
+                                                   </tr>
+                                                   <tr class="bg-light text-center">
+                                                        <th>Total</th>
+                                                        <td>2</td>
+                                                        <td>2</td>
+                                                        <td>2</td>
+                                                        <td>2</td>
+                                                        <td>2</td>
+                                                   </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            
+            <!--proving points to each student-->
             <div class="row animated fadeIn" id="provide_point_area" hidden>
                 <div class="col-lg-12 col-md-12 col-12 col-sm-12">
                     <div class="card">
@@ -276,6 +369,13 @@
         $('#provide_point').click(function(e){
             e.preventDefault();
             $("#provide_point_area").removeAttr('hidden');
+        })
+
+        $('#view_statistic').click(function(e){
+            e.preventDefault();
+
+            $("#view_statistic").attr('hidden',true);
+            $("#statistic_area").removeAttr('hidden');
         })
     })
 </script>
