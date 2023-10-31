@@ -121,7 +121,7 @@
                                 </<>
                                 <div class="row">
                                     <div class="col-md-12 text-center">
-                                        <h5>Provide points for each student bellow </h5>
+                                        <h6>Provide points for each student bellow leave blank for absent students</h6>
                                         <hr>
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@
                                                     <tr class="text-center">                                  
                                                         <td><?=$num?></td>
                                                         <td><?=$r->fullname?></td>
-                                                        <td><?=$r->mark?></td>
+                                                        <td><?=$r->mark!=null?$r->mark:'<span style="color:red;font-weight:bold">Absent</span>'?></td>
                                                     </tr>
                                                     <?php
                                                     }

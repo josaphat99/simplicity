@@ -51,7 +51,7 @@ class Teacher_model extends CI_Model
 		$this->db->select("*, assignment.id as id, assignment.title as title")
 					->from('assignment')
 					->join('result_test','result_test.test_id = assignment.id')
-					->join('student','result_test.student_id = student.id')
+					->join('student','result_test.student_id = student.id','left')
 					->join('account','student.id = account.student_id')
 					->order_by('account.fullname','ASC')
 					->limit($limit)

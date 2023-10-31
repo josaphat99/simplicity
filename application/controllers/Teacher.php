@@ -141,13 +141,7 @@ class Teacher extends CI_Controller
             if($mark != null)
             {
                 $point_provided = true;
-
-                $this->Crud->add_data('result_test',[
-                    'student_id' => $s->id_student,
-                    'test_id' => $this->input->post('test_id'),
-                    'mark' =>$mark,
-                    'date' => date('d-m-Y',time())                
-                ]);
+              
             }else{
                 continue;
             }         
@@ -155,8 +149,17 @@ class Teacher extends CI_Controller
 
         if($point_provided)
         {
-            $this->Crud->update_data('assignment',['id'=>$test_id],['status'=>1]);
+            foreach($student as $s)
+            {
+                $this->Crud->add_data('result_test',[
+                    'student_id' => $s->id_student,
+                    'test_id' => $this->input->post('test_id'),
+                    'mark' => $this->input->post($s->id_student),
+                    'date' => date('d-m-Y',time())                
+                ]);
+            }
 
+            $this->Crud->update_data('assignment',['id'=>$test_id],['status'=>1]);
             $this->session->set_flashdata(['point_recorded'=>true]);
         }else{
             $this->session->set_flashdata(['point_not_recorded'=>true]);
