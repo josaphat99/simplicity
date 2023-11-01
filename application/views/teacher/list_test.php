@@ -81,7 +81,6 @@
             </div>
         </div>
     </section>
-
       <!-- Modal form for a new test-->
       <div class="modal fade" id="newTestForm" tabindex="-1" role="dialog" aria-labelledby="formModal"
         aria-hidden="true">

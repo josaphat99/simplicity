@@ -74,7 +74,7 @@
                     </li>
 
                     <li class="dropdown">
-                        <a href="<?=site_url('teacher/list_test')?>" class="nav-link">
+                        <a href="<?=site_url('teacher/list_term')?>" class="nav-link">
                             <i class="fas fa-graduation-cap"></i><span>Tests</span>
                         </a>
                     </li>

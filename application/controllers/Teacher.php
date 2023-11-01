@@ -54,11 +54,32 @@ class Teacher extends CI_Controller
         $this->load->view('layout/js');
     }
 
+    public function list_term()
+    {
+   
+        $term = $this->Teacher_model->get_term();
+
+        foreach($term as $t)
+        {
+            $t->nb_test = count($this->Crud->get_data('assignment',['term_id'=>$t->id]));
+        }
+
+        $d = [
+            'term' => $term,   
+        ];
+
+        $this->load->view('teacher/list_term',$d);
+        $this->load->view('layout/footer');
+        $this->load->view('layout/js');
+    }
+
+    //==========================================
     public function list_test()
     {
         $teacher_id = $this->session->id;   
+        $term_id = $this->input->get('term_id');
 
-        $test = $this->Teacher_model->get_test_teacher($teacher_id);
+        $test = $this->Teacher_model->get_test_teacher($teacher_id,$term_id);
         $course = $this->Teacher_model->get_course_teacher($teacher_id);
 
         $d = [

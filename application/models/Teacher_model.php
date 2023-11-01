@@ -18,7 +18,7 @@ class Teacher_model extends CI_Model
 	}
 
 	//get tests by teacher
-	public function get_test_teacher($teacher_id=null,$limit=null,$test_id=null)
+	public function get_test_teacher($teacher_id=null,$term_id=null,$limit=null,$test_id=null)
 	{
 		$this->db->select("*, assignment.id as id, assignment.title as title, course.title as course_title, course.id as id_course, account.id as id_account")
 					->from('assignment')
@@ -35,6 +35,10 @@ class Teacher_model extends CI_Model
 		if($teacher_id != null)
 		{
 			$this->db->where(['account.id'=>$teacher_id]);
+		}
+		if($term_id != null)
+		{
+			$this->db->where(['term.id'=>$term_id]);
 		}
 		if($test_id != null)
 		{
@@ -74,6 +78,22 @@ class Teacher_model extends CI_Model
 				 ->join('grade','option.grade_id = grade.id')
 				 ->order_by('course.id','DESC')
 				 ->where(['course.teacher_id'=>$teacher_id]);
+
+		return $this->db->get()->result();
+	}
+
+	//get terms
+	public function get_term($term_id = null)
+	{		
+		$this->db->select('*, term.id as id')
+				 ->from('term')
+				 ->join('year','term.year_id = year.id');
+
+				if($term_id != null)
+				{
+				$this->db->where(['term.id'=>$term_id]);
+				}
+				 
 
 		return $this->db->get()->result();
 	}
