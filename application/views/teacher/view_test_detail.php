@@ -109,6 +109,7 @@
                                 <?php
                                     }
                                 ?>
+                                <!--statistics area-->
                                 <div id="statistic_area" class="row animated fadeIn" hidden>
                                     <div class="col-md-6">
                                         <div class="table-responsive">
@@ -125,21 +126,21 @@
                                                 <tbody>                 
                                                    <tr class="text-center">
                                                         <th>M</th>
-                                                        <td>32</td>
-                                                        <td>28</td>
-                                                        <td>4</td>
+                                                        <td><?=$count_male?></td>
+                                                        <td><?=$male_sat?></td>
+                                                        <td><?=$count_male - $male_sat?></td>
                                                    </tr>
                                                    <tr class="text-center">
                                                         <th>F</th>
-                                                        <td>20</td>
-                                                        <td>17</td>
-                                                        <td>3</td>
+                                                        <td><?=$count_female?></td>
+                                                        <td><?=$female_sat?></td>
+                                                        <td><?=$count_female - $female_sat?></td>
                                                    </tr>
                                                    <tr class="bg-light text-center">
                                                         <th>Total</th>
-                                                        <td>52</td>
-                                                        <td>45</td>
-                                                        <td>7</td>
+                                                        <td><?=$count_male + $count_female?></td>
+                                                        <td><?=$male_sat + $female_sat?></td>
+                                                        <td><?=($count_male - $male_sat) + ($count_female - $female_sat)?></td>
                                                    </tr>
                                                 </tbody>
                                             </table>
@@ -170,31 +171,31 @@
                                                    </tr>
                                                    <tr class="text-center">
                                                         <th>M</th>                                                        
-                                                        <td>17</td>
-                                                        <td>3</td>
-                                                        <td>3</td>
-                                                        <td>3</td>
-                                                        <td>3</td>
-                                                        <td>3</td>
-                                                        <td>3</td>
+                                                        <td><?=$tab_result['male_A']?></td>
+                                                        <td><?=$tab_result['male_B']?></td>
+                                                        <td><?=$tab_result['male_C']?></td>
+                                                        <td><?=$tab_result['male_D']?></td>
+                                                        <td><?=$tab_result['male_E']?></td>
+                                                        <td><?=explode('.',$tab_result['male_pass_AB'])[0]?>%</td>
+                                                        <td><?=explode('.',$tab_result['male_pass_CD'])[0]?>%</td>
                                                    </tr>
                                                    <tr class="text-center">
                                                         <th>F</th>
-                                                        <td>52</td>
-                                                        <td>45</td>
-                                                        <td>7</td>
-                                                        <td>7</td>
-                                                        <td>7</td>
-                                                        <td>45</td>
-                                                        <td>45</td>
+                                                        <td><?=$tab_result['female_A']?></td>
+                                                        <td><?=$tab_result['female_B']?></td>
+                                                        <td><?=$tab_result['female_C']?></td>
+                                                        <td><?=$tab_result['female_D']?></td>
+                                                        <td><?=$tab_result['female_E']?></td>
+                                                        <td><?=explode('.',$tab_result['female_pass_AB'])[0]?>%</td>
+                                                        <td><?=explode('.',$tab_result['female_pass_CD'])[0]?>%</td>
                                                    </tr>
                                                    <tr class="bg-light text-center">
                                                         <th>Total</th>
-                                                        <td>2</td>
-                                                        <td>2</td>
-                                                        <td>2</td>
-                                                        <td>2</td>
-                                                        <td>2</td>
+                                                        <td><?=$tab_result['male_A'] + $tab_result['female_A'] ?></td>
+                                                        <td><?=$tab_result['male_B'] + $tab_result['female_B'] ?></td>
+                                                        <td><?=$tab_result['male_C'] + $tab_result['female_C'] ?></td>
+                                                        <td><?=$tab_result['male_D'] + $tab_result['female_D'] ?></td>
+                                                        <td><?=$tab_result['male_E'] + $tab_result['female_E'] ?></td>
                                                    </tr>
                                                 </tbody>
                                             </table>
@@ -277,7 +278,7 @@
                 if(count($result_test) > 0)
                 {
             ?>
-            <div class="row animated fadeIn" id="student_grade">
+            <div class="row" id="student_grade">
                 <div class="col-lg-12 col-md-12 col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header bg-info">
@@ -291,8 +292,8 @@
                         <div class="collapse show" id="grade-collapse">
                             <div class="card-body">
                                 </<>
-                                <div class="row">
-                                </div>
+                                <!-- <div class="row">
+                                </div> -->
                                 <div class="row">
                                     <div class="col-md-7 offset-md-2">
                                         <div class="table-responsive">

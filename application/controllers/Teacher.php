@@ -102,20 +102,122 @@ class Teacher extends CI_Controller
         $option_id = $this->Crud->get_data('option',['id'=>$course->option_id])[0]->id;
 
         $result_test = $this->Teacher_model->get_test_result(null,null,$test_id);
-
         // var_dump($result_test);die();
+
+        $count_male = 0;
+        $count_female = 0;
+        $male_sat = 0;
+        $female_sat = 0;
+        $tab_result = [
+            'male_A'=> 0,
+            'male_B'=> 0,
+            'male_C'=> 0,
+            'male_D'=> 0,
+            'male_E'=> 0,
+            'female_A'=> 0,
+            'female_B'=> 0,
+            'female_C'=> 0,
+            'female_D'=> 0,
+            'female_E'=> 0,
+        ];
 
         if(count($result_test) <= 0)
         {
             $student = $this->Crud->join_account_student($option_id);
         }else{
             $student = [];
+
+            /**
+             * statistics data
+             * ================
+             * Nb Male and Female
+             * Nb Male who sat and Female who sat
+             * -------------------------------------
+             * male_A up to E
+             * female_A up to E
+             */            
+
+            foreach($result_test as $r)
+            {
+                if($r->gender == 'male')
+                {
+                    $count_male++;
+
+                    if($r->mark != null)
+                    {
+                        $male_sat++;
+
+                        $percent = $r->mark * 100 / $r->max_mark;
+
+                        if($percent >= 0 && $percent <= 45)
+                        {
+                            $tab_result['male_E'] = $tab_result['male_E'] + 1;
+                        }else if($percent >= 45 && $percent <= 54)
+                        {
+                            $tab_result['male_D'] = $tab_result['male_D'] + 1;
+                    
+                        }else if($percent >= 55 && $percent <= 64)
+                        {
+                            $tab_result['male_C'] = $tab_result['male_C'] + 1;
+                        }
+                        else if($percent >= 65 && $percent <= 74)
+                        {
+                            $tab_result['male_B'] = $tab_result['male_B'] + 1;                
+                        }else if($percent >= 75 && $percent <= 100)
+                        {
+                            $tab_result['male_A'] = $tab_result['male_A'] + 1;
+                        }
+                    }else{
+                        $tab_result['male_E'] = $tab_result['male_E'] + 1;
+                    }
+                }else{
+                    $count_female++;
+
+                    if($r->mark != null)
+                    {
+                        $female_sat++;
+
+                        $percent = $r->mark * 100 / $r->max_mark;
+
+                        if($percent >= 0 && $percent <= 45)
+                        {
+                            $tab_result['female_E'] = $tab_result['female_E'] + 1;
+                        }else if($percent >= 45 && $percent <= 54)
+                        {
+                            $tab_result['female_D'] = $tab_result['female_D'] + 1;
+                    
+                        }else if($percent >= 55 && $percent <= 64)
+                        {
+                            $tab_result['female_C'] = $tab_result['female_C'] + 1;
+                        }
+                        else if($percent >= 65 && $percent <= 74)
+                        {
+                            $tab_result['female_B'] = $tab_result['female_B'] + 1;                
+                        }else if($percent >= 75 && $percent <= 100)
+                        {
+                            $tab_result['female_A'] = $tab_result['female_A'] + 1;
+                        }
+                    }else{
+                        $tab_result['female_E'] = $tab_result['female_E'] + 1;
+                    }
+                }
+            }
         }
-                
+        
+        $tab_result['male_pass_AB'] = ($tab_result['male_A'] + $tab_result['male_B']) * 100 / $count_male;
+        $tab_result['male_pass_CD'] = ($tab_result['male_C'] + $tab_result['male_D']) * 100 / $count_male;
+        $tab_result['female_pass_AB'] = ($tab_result['female_A'] + $tab_result['female_B']) * 100 / $count_male;
+        $tab_result['female_pass_CD'] = ($tab_result['female_C'] + $tab_result['female_D']) * 100 / $count_male;
+
         $d = [
             'test' => $test,   
             'student' => $student,
-            'result_test' => $result_test
+            'result_test' => $result_test,
+            'count_male' => $count_male,
+            'count_female' => $count_female,
+            'male_sat' => $male_sat,
+            'female_sat' => $female_sat,
+            'tab_result' => $tab_result
         ];
 
         $this->load->view('teacher/view_test_detail',$d);
