@@ -32,7 +32,7 @@ class Teacher extends CI_Controller
         $teacher_id = $this->session->id;        
 
         $ongoing_ass = $this->Teacher_model->join_assignment_course($teacher_id,'0',5);
-        $test = $this->Teacher_model->get_test_teacher($teacher_id,5);
+        $test = $this->Teacher_model->get_test_teacher($teacher_id,null,5);
         $course = $this->Teacher_model->get_course_teacher($teacher_id);
 
         $event = $this->Crud->get_data_desc('event',[],5);        
@@ -73,7 +73,7 @@ class Teacher extends CI_Controller
         $this->load->view('layout/js');
     }
 
-    //==========================================
+    //=========================
     public function list_test()
     {
         $teacher_id = $this->session->id;   
@@ -202,12 +202,15 @@ class Teacher extends CI_Controller
                     }
                 }
             }
+
+                    //calulate pass % for both male and female
+            $tab_result['male_pass_AB'] = ($tab_result['male_A'] + $tab_result['male_B']) * 100 / $count_male;
+            $tab_result['male_pass_CD'] = ($tab_result['male_C'] + $tab_result['male_D']) * 100 / $count_male;
+            $tab_result['female_pass_AB'] = ($tab_result['female_A'] + $tab_result['female_B']) * 100 / $count_male;
+            $tab_result['female_pass_CD'] = ($tab_result['female_C'] + $tab_result['female_D']) * 100 / $count_male;
         }
         
-        $tab_result['male_pass_AB'] = ($tab_result['male_A'] + $tab_result['male_B']) * 100 / $count_male;
-        $tab_result['male_pass_CD'] = ($tab_result['male_C'] + $tab_result['male_D']) * 100 / $count_male;
-        $tab_result['female_pass_AB'] = ($tab_result['female_A'] + $tab_result['female_B']) * 100 / $count_male;
-        $tab_result['female_pass_CD'] = ($tab_result['female_C'] + $tab_result['female_D']) * 100 / $count_male;
+ 
 
         $d = [
             'test' => $test,   
@@ -244,7 +247,7 @@ class Teacher extends CI_Controller
          redirect('teacher/list_test');
      }
 
-     //record points
+    //record points
      public function record_point()
     {
         $test_id = $this->input->post('test_id');        

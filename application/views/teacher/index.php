@@ -83,52 +83,61 @@
                     <div class="card-header">
                         <h4>Ongoing Assignment</h4>
                         <div class="card-header-action">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newAssForm">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newAssForm">
                             <i class="fas fa-plus"></i>&nbsp; New assignment
                             </button>&nbsp;&nbsp;
                         </div>
                         <div class="card-header-action">
-                            <a data-collapse="#teacher-collapse" class="btn btn-icon btn-info" href="#"><i
+                            <a data-collapse="#ass-collapse" class="btn btn-icon btn-info" href="#"><i
                             class="fas fa-minus"></i></a>
                         </div>
                     </div>
-                    <div class="collapse show" id="teacher-collapse">
+                    <div class="collapse show" id="ass-collapse">
                         <div class="card-body">
+                            <?php
+                                if(count($ongoing_ass) > 0){
+                            ?>
                             <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <tr class="bg-primary text-white text-center">
-                                <th>Title</th>
-                                <th>Starting date</th>
-                                <th>Due date</th>
-                                <th>Course</th>
-                                <th>Action</th>
-                                </tr>
-                                <tbody>                 
-                                    
-                                    <?php
-                                        foreach($ongoing_ass as $o)
-                                        {
-                                    ?>  
-                                    <tr>                                  
-                                        <td><?=$o->title?></td>
-                                        <td><?=$o->start_date?></td>
-                                        <td><?=$o->end_date?></td>
-                                        <td><?=$o->course_title?></td>
-                                        <td>
-                                            <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
-                                                class="fas fa-eye"></i></a>
-                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
-                                            data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
-                                            data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                                        </td>
+                                <table class="table table-striped table-bordered">
+                                    <tr class="bg-info text-white text-center">
+                                    <th>Title</th>
+                                    <th>Starting date</th>
+                                    <th>Due date</th>
+                                    <th>Course</th>
+                                    <th>Action</th>
                                     </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                    
-                                </tbody>
-                            </table>
+                                    <tbody>                 
+                                        
+                                        <?php
+                                            foreach($ongoing_ass as $o)
+                                            {
+                                        ?>  
+                                        <tr>                                  
+                                            <td><?=$o->title?></td>
+                                            <td><?=$o->start_date?></td>
+                                            <td><?=$o->end_date?></td>
+                                            <td><?=$o->course_title?></td>
+                                            <td>
+                                                <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
+                                                    class="fas fa-eye"></i></a>
+                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
+                                                data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
+                                                data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
+                            <?php
+                                }else{
+                            ?>
+                                    <p class="text-center alert alert-light">Once you upload an assignment you will see it here!</p>
+                            <?php
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -150,41 +159,52 @@
                     </div>
                     <div class="collapse show" id="test-collapse">
                         <div class="card-body">
+                            <?php
+                                if(count($test) > 0)
+                                {
+                            ?>                            
                             <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <tr class="bg-primary text-white text-center">
-                                <th>Title</th>
-                                <th>Starting date</th>
-                                <th>Due date</th>
-                                <th>Course</th>
-                                <th>Action</th>
-                                </tr>
-                                <tbody>                 
-                                    
-                                    <?php
-                                        foreach($test as $t)
-                                        {
-                                    ?>  
-                                    <tr>                                  
-                                        <td><?=$t->title?></td>
-                                        <td><?=$t->start_date?></td>
-                                        <td><?=$t->end_date?></td>
-                                        <td><?=$t->course_title?></td>
-                                        <td>
-                                            <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
-                                                class="fas fa-eye"></i></a>
-                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
-                                            data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
-                                            data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                                        </td>
+                                <table class="table table-striped table-bordered">
+                                    <tr class="bg-info text-white text-center">
+                                    <th>Title</th>
+                                    <th>Course</th>
+                                    <th>Max Mark</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
                                     </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                    
-                                </tbody>
-                            </table>
+                                    <tbody>                 
+                                        
+                                        <?php
+                                            foreach($test as $t)
+                                            {
+                                        ?>  
+                                        <tr class="text-center">                                  
+                                            <td><?=$t->title?></td>
+                                            <td><?=$t->course_title?></td>
+                                            <td><?=$t->max_mark?></td>
+                                            <td><?=$t->start_date?></td>
+                                            <td>
+                                                <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
+                                                    class="fas fa-eye"></i></a>
+                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
+                                                data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
+                                                data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                        
+                                    </tbody>
+                                </table>
                             </div>
+                            <?php
+                                }else{
+                            ?>
+                                <p class="text-center alert alert-light">Once you add a test you will see it here!</p>
+                            <?php
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -205,36 +225,47 @@
                         </div>
                         <div class="collapse show" id="course-collapse">
                             <div class="card-body">
+                                <?php
+                                    if(count($course) > 0)
+                                    {
+                                ?>                               
                                 <div class="table-responsive">
-                                <table class="table table-striped table-bordered">
-                                    <tr class="bg-primary text-white text-center">
-                                        <th>Title</th>
-                                        <th>Option</th>
-                                        <th>Level</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    <tbody>                 
-                                        
-                                        <?php
-                                            foreach($course as $c)
-                                            {
-                                        ?>  
-                                        <tr>                                  
-                                            <td><?=$c->title?></td>
-                                            <td><?=$c->name?></td>
-                                            <td><?=$c->grade?></td>
-                                            <td>
-                                                <a class="btn btn-success btn-action" data-toggle="tooltip" title="View"><i
-                                                    class="fas fa-eye"></i></a>
-                                            </td>
+                                    <table class="table table-striped table-bordered">
+                                        <tr class="bg-info text-white text-center">
+                                            <th>Title</th>
+                                            <th>Option</th>
+                                            <th>Level</th>
+                                            <!-- <th>Action</th> -->
                                         </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                        
-                                    </tbody>
-                                </table>
+                                        <tbody>                 
+                                            
+                                            <?php
+                                                foreach($course as $c)
+                                                {
+                                            ?>  
+                                            <tr>                                  
+                                                <td><?=$c->title?></td>
+                                                <td><?=$c->name?></td>
+                                                <td><?=$c->grade?></td>
+                                                <!-- <td>
+                                                    <a class="btn btn-success btn-action" data-toggle="tooltip" title="View"><i
+                                                        class="fas fa-eye"></i></a>
+                                                </td> -->
+                                            </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                            
+                                        </tbody>
+                                    </table>
                                 </div>
+                                <?php
+                                    }else{
+                                ?>
+                                        <p class="text-center alert alert-light">Your courses will be displayed here!</p>
+                                <?php
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -252,9 +283,13 @@
                         </div>
                         <div class="collapse show" id="event-collapse">
                             <div class="card-body">
+                                <?php
+                                    if(count($event) > 0)
+                                    {
+                                ?>            
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered">
-                                        <tr class="bg-primary text-white text-center">
+                                        <tr class="bg-info text-white text-center">
                                         <th>Image</th>
                                         <th>Title</th>
                                         <th>Category</th>
@@ -283,7 +318,15 @@
                                             ?>                                    
                                         </tbody>
                                     </table>
-                                </div>
+                                </div>                                
+                                <?php
+                                    }
+                                    else{
+                                        ?>
+                                        <p class="text-center alert alert-light">When the post a new event, you will see here!</p>
+                                        <?php
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>        

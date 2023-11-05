@@ -30,11 +30,11 @@ class Teacher_model extends CI_Model
 					->join('year','term.year_id = year.id')
 					->order_by('assignment.id','DESC')
 					->limit($limit)
-					->where(['type'=>'test']);
+					->where(['assignment.type'=>'test']);
 
 		if($teacher_id != null)
 		{
-			$this->db->where(['account.id'=>$teacher_id]);
+			$this->db->where(['course.teacher_id'=>$teacher_id]);
 		}
 		if($term_id != null)
 		{
