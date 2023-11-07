@@ -72,7 +72,7 @@ class Teacher_model extends CI_Model
 	//get courses
 	public function get_course_teacher($teacher_id)
 	{
-		$this->db->select('*')
+		$this->db->select('*, option.id as id_option')
 				 ->from('course')
 				 ->join('option','course.option_id = option.id')
 				 ->join('grade','option.grade_id = grade.id')

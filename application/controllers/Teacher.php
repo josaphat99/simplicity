@@ -54,6 +54,44 @@ class Teacher extends CI_Controller
         $this->load->view('layout/js');
     }
 
+    //===========================
+    public function list_department()
+    {
+        $teacher_id = $this->session->id;       
+
+        $department = $this->Teacher_model->get_course_teacher($teacher_id);
+
+        foreach($department as $d)
+        {
+            $d->nb_student = count($this->Crud->join_account_student($d->id_option));
+        }
+
+        $d = [
+            'department' => $department,           
+        ];
+
+        $this->load->view('teacher/list_department',$d);
+        $this->load->view('layout/footer');
+        $this->load->view('layout/js');
+    }
+
+    public function list_student()
+    {
+        $department_id = $this->input->get('department_id');
+        $department_name = $this->Crud->get_data('option',['id'=>$department_id])[0]->name;
+
+        $student = $this->Crud->join_account_student($department_id);
+
+        $d = [
+            'student' => $student,       
+            'department_name' => $department_name    
+        ];
+
+        $this->load->view('teacher/list_student',$d);
+        $this->load->view('layout/footer');
+        $this->load->view('layout/js');
+    }
+    //================================
     public function list_term()
     {
    
@@ -79,10 +117,13 @@ class Teacher extends CI_Controller
         $teacher_id = $this->session->id;   
         $term_id = $this->input->get('term_id');
 
+        $term = $this->Crud->get_data('term',['id'=>$term_id])[0]->term;
         $test = $this->Teacher_model->get_test_teacher($teacher_id,$term_id);
         $course = $this->Teacher_model->get_course_teacher($teacher_id);
 
         $d = [
+            'term_id' => $term_id,
+            'term' => $term,
             'test' => $test,   
             'course' => $course,
         ];
@@ -97,7 +138,7 @@ class Teacher extends CI_Controller
     {
         $test_id = $this->input->get('test_id');
 
-        $test = $this->Teacher_model->get_test_teacher(null,null,$test_id);
+        $test = $this->Teacher_model->get_test_teacher(null,null,null,$test_id);
         $course = $this->Crud->get_data('course',['id'=>$test[0]->course_id])[0];
         $option_id = $this->Crud->get_data('option',['id'=>$course->option_id])[0]->id;
 
@@ -149,7 +190,7 @@ class Teacher extends CI_Controller
 
                         $percent = $r->mark * 100 / $r->max_mark;
 
-                        if($percent >= 0 && $percent <= 45)
+                        if($percent >= 0 && $percent <= 44)
                         {
                             $tab_result['male_E'] = $tab_result['male_E'] + 1;
                         }else if($percent >= 45 && $percent <= 54)
@@ -179,7 +220,7 @@ class Teacher extends CI_Controller
 
                         $percent = $r->mark * 100 / $r->max_mark;
 
-                        if($percent >= 0 && $percent <= 45)
+                        if($percent >= 0 && $percent <= 44)
                         {
                             $tab_result['female_E'] = $tab_result['female_E'] + 1;
                         }else if($percent >= 45 && $percent <= 54)
@@ -231,12 +272,15 @@ class Teacher extends CI_Controller
      //new test
      public function new_test()
      {
+        $term_id = $this->input->post('term_id');
+
          $d = [
              'title' => $this->input->post('title'),
              'course_id' => $this->input->post('course_id'),
              'description' => $this->input->post('description'),
              'start_date' => $this->input->post('date'),
              'max_mark' => $this->input->post('max_mark'),
+             'term_id' => $term_id,
              'type' => 'test'
          ];
  
@@ -244,7 +288,7 @@ class Teacher extends CI_Controller
  
          $this->session->set_flashdata(['test_added'=>true]);
  
-         redirect('teacher/list_test');
+         redirect('teacher/list_test?term_id='.$term_id);
      }
 
     //record points

@@ -24,7 +24,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon l-bg-purple">
-                            <i class="fas fa-chalkboard-teacher"></i>
+                            <i class="fas fa-book-reader"></i>
                         </div>
                         <div class="card-wrap">
                         <div class="padding-20">
@@ -42,7 +42,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon l-bg-green">
-                        <i class="fa fa-graduation-cap"></i>
+                        <i class="fas fa-book"></i>
                         </div>
                         <div class="card-wrap">
                         <div class="padding-20">
@@ -60,13 +60,13 @@
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon l-bg-cyan">
-                            <i class="fas fa-dollar-sign"></i>
+                            <i data-feather="film"></i>
                         </div>
                         <div class="card-wrap">
                         <div class="padding-20">
                             <div class="text-right">
                             <h3 class="font-light mb-0">
-                                <i class="ti-arrow-up text-success"></i> <?=count($event)?>
+                                <?=count($event)?>
                             </h3>
                             <span class="text-muted">Upcoming Events</span>
                             </div>
@@ -167,6 +167,7 @@
                                 <table class="table table-striped table-bordered">
                                     <tr class="bg-info text-white text-center">
                                     <th>Title</th>
+                                    <th>Term</th>
                                     <th>Course</th>
                                     <th>Max Mark</th>
                                     <th>Date</th>
@@ -180,15 +181,14 @@
                                         ?>  
                                         <tr class="text-center">                                  
                                             <td><?=$t->title?></td>
+                                            <td><?=$t->term?></td>
                                             <td><?=$t->course_title?></td>
                                             <td><?=$t->max_mark?></td>
                                             <td><?=$t->start_date?></td>
                                             <td>
-                                                <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
-                                                    class="fas fa-eye"></i></a>
-                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
-                                                data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
-                                                data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                                                <a href="<?=site_url('teacher/view_test_detail?test_id='.$t->id)?>" class="btn btn-success btn-action mr-1" data-toggle="tooltip" title="View"><i
+                                                    class="fas fa-eye"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                         <?php

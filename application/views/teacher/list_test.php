@@ -24,10 +24,10 @@
               <div class="col-lg-12 col-md-12 col-12 col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Tests</h4>
+                        <h4><?=$term?></h4>
                         <div class="card-header-action">
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newTestForm">
-                            <i class="fas fa-plus"></i>&nbsp; New Test
+                                <i class="fas fa-plus"></i>&nbsp; New Test
                             </button>&nbsp;&nbsp;
                         </div>
 
@@ -38,42 +38,52 @@
                     </div>
                     <div class="collapse show" id="test-collapse">
                         <div class="card-body">
+                            <?php
+                                if(count($test) > 0)
+                                {
+                            ?>                          
                             <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <tr class="bg-info text-white text-center">
-                                    <th>Title</th>
-                                    <th>Course</th>
-                                    <th>Max Mark</th>
-                                    <th>Date</th>                                
-                                    <th>Action</th>
-                                </tr>
-                                <tbody>                 
-                                    
-                                    <?php
-                                        foreach($test as $t)
-                                        {
-                                    ?>  
-                                    <tr class="text-center">                                  
-                                        <td><?=$t->title?></td>
-                                        <td><?=$t->course_title?></td>
-                                        <td><?=$t->max_mark?></td>
-                                        <td><?=$t->start_date?></td>
-
-                                        <td>
-                                            <a href="<?=site_url('teacher/view_test_detail?test_id='.$t->id)?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
-                                                class="fas fa-eye"></i></a>
-                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
-                                            data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
-                                            data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                                        </td>
+                                <table class="table table-striped table-bordered">
+                                    <tr class="bg-info text-white text-center">
+                                        <th>Title</th>
+                                        <th>Course</th>
+                                        <th>Max Mark</th>
+                                        <th>Date</th>                                
+                                        <th>Action</th>
                                     </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                    
-                                </tbody>
-                            </table>
+                                    <tbody>                 
+                                        
+                                        <?php
+                                            foreach($test as $t)
+                                            {
+                                        ?>  
+                                        <tr class="text-center">                                  
+                                            <td><?=$t->title?></td>
+                                            <td><?=$t->course_title?></td>
+                                            <td><?=$t->max_mark?></td>
+                                            <td><?=$t->start_date?></td>
+
+                                            <td>
+                                                <a href="<?=site_url('teacher/view_test_detail?test_id='.$t->id)?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
+                                                    class="fas fa-eye"></i></a>
+                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
+                                                data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
+                                                data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        }
+                                        ?>                                    
+                                    </tbody>
+                                </table>
                             </div>
+                            <?php
+                                }else{
+                            ?>
+                                    <p class="text-center alert alert-light">No test has been added in this term yet!</p>
+                            <?php
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -142,6 +152,7 @@
                             <input type="date" class="form-control" name="date">
                         </div>
                     </div>
+                    <input type="hidden" name="term_id" value=<?=$term_id?>>
                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD</button>
                 </form>
             </div>

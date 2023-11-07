@@ -69,13 +69,19 @@
 
                     <li class="dropdown">
                         <a href="#" class="nav-link">
-                            <i class="fas fa-graduation-cap"></i><span>Assignments</span>
+                            <i class="fas fa-book-reader"></i><span>Assignments</span>
                         </a>
                     </li>
 
                     <li class="dropdown">
                         <a href="<?=site_url('teacher/list_term')?>" class="nav-link">
-                            <i class="fas fa-graduation-cap"></i><span>Tests</span>
+                            <i class="fas fa-book-open"></i><span>Tests</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="<?=site_url('teacher/list_department')?>" class="nav-link">
+                        <i class="material-icons">card_membership</i><span>Departments</span>
                         </a>
                     </li>
             <?php
