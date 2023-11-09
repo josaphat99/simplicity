@@ -25,9 +25,31 @@
               <div class="col-lg-12 col-md-12 col-12 col-sm-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Students in <?=$department_name?></h4>
+                    <h4>Students in <?=$department_name.' '.$grade?></h4>
                   </div>
                   <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="table-responsive">
+                          <table class="table table-striped table-bordered table-sm">                         
+                            <tbody>                 
+                              <tr>
+                                <th class="bg-info text-white">Your courses</th>                                                             
+                                <?php
+                                    foreach($course as $c)
+                                    {
+                                ?>
+                                    <th><?=$c->title?></th> 
+                                <?php
+                                }
+                                ?>   
+                                </tr>                         
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
                     <div class="table-responsive">
                       <table class="table table-striped">
                         <tr class="text-white bg-info">

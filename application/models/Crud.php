@@ -117,4 +117,44 @@ class Crud extends CI_Model
 		
 		return $this->db->get()->result();
 	}	
+
+	//get courses per option
+	public function get_course_option($option_id)
+	{
+		$this->db->select("*, account.id as id, course.id as id_course")
+				 ->from('course')
+				 ->join('account','course.teacher_id = account.id')
+				 ->order_by('course.id','DESC')
+				 ->where(['account.role'=>'teacher']);
+		
+				if($option_id != null)
+				{
+					$this->db->where(['course.option_id'=>$option_id]);
+				}
+		
+		return $this->db->get()->result();
+	}
+
+	//get assignment, course,account
+	public function get_ass_course_teacher($term_id=null,$teacher_id=null)
+	{
+		$this->db->select("*, assignment.id as id, account.id as id_teacher, course.id as id_course")
+				 ->from('assignment')
+				 ->join('course','assignment.course_id = course.id')
+				 ->join('account','course.teacher_id = account.id')
+				 ->order_by('assignment.id','DESC');
+		
+				if($term_id != null)
+				{
+					$this->db->where(['assignment.term_id'=>$term_id]);
+				}
+				if($teacher_id != null)
+				{
+					$this->db->where(['account.id'=>$teacher_id]);
+				}
+		
+		return $this->db->get()->result();
+	}
 }  
+
+

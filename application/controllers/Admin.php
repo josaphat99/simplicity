@@ -176,6 +176,8 @@ class Admin extends CI_Controller
         $option_id = $this->input->get('option_id');
         $option = $this->Crud->get_data('option',['id'=>$option_id]);
 
+        $d['course'] = $this->Crud->get_course_option($option_id);
+        $d['teacher'] = $this->Crud->get_data('account',['role'=>'teacher']);
         $d['student'] = $this->Crud->join_account_student($option_id);
         $d['option_name'] = count($option) > 0?$option[0]->name:'';
         $d['grade_id'] = count($option) > 0?$option[0]->grade_id:'';
@@ -233,6 +235,29 @@ class Admin extends CI_Controller
 		$this->db->trans_commit();
 
         $this->session->set_flashdata(['student_added' => true]);
+
+        redirect('admin/view_student?option_id='.$option_id);
+    }
+
+    //============COURSES=========
+    public function new_course()
+    {
+        if($this->session->role != 'admin')
+        {
+           redirect('admin/restriction');
+        }
+
+        $option_id = $this->input->post('option_id');
+
+        $d = [
+            'title' => $this->input->post('title'),
+            'teacher_id' => $this->input->post('teacher_id'),
+            'option_id' => $option_id,
+        ];
+
+        $this->Crud->add_data('course',$d);
+
+        $this->session->set_flashdata(['course_added' => true]);
 
         redirect('admin/view_student?option_id='.$option_id);
     }

@@ -151,7 +151,7 @@
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-sm">
                                                 <tr class="bg-info text-white text-center">
-                                                    <th colspan="8">Results</th>
+                                                    <th colspan="8">Analysis</th>
                                                 </tr>
                                                 <tr class="bg-light text-center">                                                    
                                                     <th colspan="5">Passed</th>
@@ -282,7 +282,7 @@
                 <div class="col-lg-12 col-md-12 col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header bg-info">
-                            <h4 class="text-white">Student Points</h4>
+                            <h4 class="text-white">Class list</h4>
 
                             <div class="card-header-action">
                                 <a data-collapse="#grade-collapse" class="btn btn-icon btn-info" href="#"><i

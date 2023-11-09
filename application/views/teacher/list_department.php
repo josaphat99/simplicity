@@ -42,7 +42,7 @@
                         foreach($department as $d)
                         {
                     ?>                    
-                        <a class="department_link" href="<?=site_url('teacher/list_student?department_id='.$d->id_option)?>">
+                        <a class="department_link" href="<?=site_url('teacher/list_student?department_id='.$d->id_option.'&grade='.$d->grade)?>">
                             <div class="col-xl-6 col-lg-6 offset-md-2">
                                 <div class="card l-bg-cyan department_card">
                                     <div class="card-statistic-3">

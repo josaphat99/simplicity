@@ -61,9 +61,24 @@ class Teacher extends CI_Controller
 
         $department = $this->Teacher_model->get_course_teacher($teacher_id);
 
+        $id_option_tab = []; 
+        $counter = 0;
+
         foreach($department as $d)
         {
-            $d->nb_student = count($this->Crud->join_account_student($d->id_option));
+            /**Check if an id_option is in the idoption array
+             * no, add it
+             * yes, remove item from deaprtment array
+             */
+
+            if(!in_array($d->id_option,$id_option_tab))
+            {
+                array_push($id_option_tab,$d->id_option);
+                $d->nb_student = count($this->Crud->join_account_student($d->id_option));
+            }else{
+                unset($department[$counter]);
+            }
+            $counter++;
         }
 
         $d = [
@@ -78,13 +93,19 @@ class Teacher extends CI_Controller
     public function list_student()
     {
         $department_id = $this->input->get('department_id');
+        $grade = $this->input->get('grade');
+        
         $department_name = $this->Crud->get_data('option',['id'=>$department_id])[0]->name;
+        $teacher_id = $this->session->id;
 
         $student = $this->Crud->join_account_student($department_id);
+        $course = $this->Crud->get_data('course',['option_id'=>$department_id,'teacher_id'=>$teacher_id]);
 
         $d = [
             'student' => $student,       
-            'department_name' => $department_name    
+            'department_name' => $department_name,
+            'course' => $course,
+            'grade' => $grade
         ];
 
         $this->load->view('teacher/list_student',$d);
@@ -94,12 +115,12 @@ class Teacher extends CI_Controller
     //================================
     public function list_term()
     {
-   
+        $teacher_id = $this->session->id;
         $term = $this->Teacher_model->get_term();
 
         foreach($term as $t)
         {
-            $t->nb_test = count($this->Crud->get_data('assignment',['term_id'=>$t->id]));
+            $t->nb_test = count($this->Crud->get_ass_course_teacher($t->id,$teacher_id));
         }
 
         $d = [
@@ -109,6 +130,7 @@ class Teacher extends CI_Controller
         $this->load->view('teacher/list_term',$d);
         $this->load->view('layout/footer');
         $this->load->view('layout/js');
+
     }
 
     //=========================

@@ -13,6 +13,20 @@
 <?php
     $this->session->student_added = null;
     }
+    if(($this->session->course_added))
+    {
+?>
+        <script>
+            Swal.fire({            
+            icon: 'success',
+            title: 'Course added successfully!',
+            showConfirmButton: false,
+            timer: 3000
+            })
+        </script>
+<?php
+    $this->session->course_added = null;
+    }
 ?>
 
  <!-- Main Content -->
@@ -56,6 +70,57 @@
                                 <td>
                                     <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i
                                         class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
+                                    data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
+                                    data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <?php
+                            }
+                            ?>                            
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+             <!--courses table-->
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-12 col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Courses in <?=$option_name?></h4>
+                    <div class="card-header-action">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newCourseForm">
+                         <i class="fas fa-plus"></i>&nbsp; New course
+                        </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <tr>
+                          <th>N0</th>
+                          <th>Title</th>
+                          <th>Teacher</th>
+                          <th>Action</th>
+                        </tr>
+                        <tbody>                 
+                            
+                            <?php
+                                $num = 0;
+
+                                foreach($course as $c)
+                                {
+                                    $num++;
+                            ?>  
+                            <tr>                                  
+                                <td><?=$num?></td>
+                                <td><?=$c->title?></td>
+                                <td><?=$c->fullname?></td>
+                                <td>
                                     <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
                                     data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
                                     data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
@@ -151,6 +216,46 @@
                         </div>
                         <input type="hidden" name="role" value="student">
                         <input type="hidden" name="grade_id" value=<?=$grade_id?>>
+                        <input type="hidden" name="option_id" value=<?=$option_id?>>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-- Modal form for a new course-->
+      <div class="modal fade" id="newCourseForm" tabindex="-1" role="dialog" aria-labelledby="formModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModal">Add a new Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?=site_url('admin/new_course')?>" method="post" class="">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Title" name="title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Teacher</label>
+                            <select class="form-control selectric" name="teacher_id">
+                                <?php
+                                    foreach($teacher as $t)
+                                    {
+                                ?>
+                                <option value="<?=$t->id?>"><?=$t->fullname?></option>                              
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
                         <input type="hidden" name="option_id" value=<?=$option_id?>>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD</button>
                     </form>
