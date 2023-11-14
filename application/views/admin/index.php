@@ -320,7 +320,7 @@
                     </div>
                     <div class="form-group">
                         <label>Gender</label>
-                        <select class="form-control" name="gender">
+                        <select class="form-control selectric" name="gender">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
@@ -403,7 +403,7 @@
                     </div>
                     <div class="form-group">
                         <label>Gender</label>
-                        <select class="form-control" name="gender">
+                        <select class="form-control selectric" name="gender">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
@@ -486,7 +486,7 @@
                     </div>
                     <div class="form-group">
                         <label>Gender</label>
-                        <select class="form-control" name="gender">
+                        <select class="form-control selectric" name="gender">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>

@@ -73,4 +73,65 @@ class Ajax extends CI_Controller
         }
         echo $html;
     }
+
+    public function view_grade()
+    {
+        $account_id = $this->session->id;
+        $student_id = $this->Crud->get_data('account',['id'=>$account_id])[0]->student_id;
+        $test_id = $this->input->post('test_id');
+        $max_mark = $this->input->post('max_mark');
+
+        $result = $this->Crud->get_data('result_test',['student_id'=>$student_id,'test_id'=>$test_id]);
+        $html = '';
+        $note = '';
+
+        if(count($result) > 0)
+        {
+            if($result[0]->mark != null)
+            {
+                $mark_percent = explode('.',$result[0]->mark*100/$max_mark)[0];
+            }else{
+                $mark_percent = 0;
+            }
+
+            if($mark_percent >= 0 && $mark_percent <= 44)
+            {
+                $note = 'E';
+            }else if($mark_percent >= 45 && $mark_percent <= 54)
+            {
+                $note = 'D';
+        
+            }else if($mark_percent >= 55 && $mark_percent <= 64)
+            {
+                $note = 'C';
+            }
+            else if($mark_percent >= 65 && $mark_percent <= 74)
+            {
+                $note = 'B';                
+            }else if($mark_percent >= 75 && $mark_percent <= 100)
+            {
+                $note = 'A';
+            }
+
+            $html ="<table class='table table-striped table-bordered table-sm'>
+                        <tr class='text-center'>
+                            <th>Obtained mark</th>
+                            <td>".$result[0]->mark."</td>
+                        </tr>
+                        <tr class='text-center'>
+                            <th>Mark in %</th>
+                            <td>".$mark_percent."</td>
+                        </tr>
+                        <tr class='text-center'>
+                            <th>Analysis</th>
+                            <td>".$note."</td>
+                        </tr>
+                    </table>
+            " ;
+        }else{
+            $html = "<p class='alert alert-light'>Grades are not yet available!</p>";
+        }
+
+        echo $html;
+    }
 }

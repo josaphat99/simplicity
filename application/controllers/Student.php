@@ -104,4 +104,55 @@ class Student extends CI_Controller
 
         redirect('student/view_pending_request');
     }
+
+    //view course
+    public function view_course()
+    {
+        $account_id = $this->session->id;
+        $student_id = $this->Crud->get_data('account',['id'=>$account_id])[0]->student_id;
+        $option_id = $this->Crud->get_data('student',['id'=>$student_id])[0]->option_id;
+        $option = $this->Crud->get_data('option',['id'=>$option_id]);
+        $option_name = $option[0]->name;
+
+        $grade = $this->Crud->get_data('grade',['id'=>$option[0]->grade_id])[0]->grade;
+       
+        $course = $this->Crud->get_course_option($option_id);
+
+        $d = [
+            'option_id' => $option_id,
+            'option_name' => $option_name,
+            'grade' => $grade,
+            'course' => $course
+        ];
+        
+        $this->load->view('student/view_course',$d);
+        $this->load->view('layout/footer');
+        $this->load->view('layout/js');
+    }
+
+    //view test
+    public function view_test()
+    {
+        $course_id = $this->input->get('course_id');
+        $course = $this->Crud->get_data('course',['id'=>$course_id]);
+        $test = $this->Crud->get_data("assignment",['course_id'=>$course_id]);
+
+        //get the term
+        if(count($test) > 0)
+        {
+            foreach($test as $t)
+            {
+                $t->term = $this->Crud->get_data("term",['id'=>$t->term_id])[0]->term;
+            }
+        }
+
+        $d = [
+            'test' => $test,   
+            'course_title' => $course[0]->title,
+        ];
+
+        $this->load->view('student/view_test',$d);
+        $this->load->view('layout/footer');
+        $this->load->view('layout/js');
+    }
 }

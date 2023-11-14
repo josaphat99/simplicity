@@ -101,7 +101,7 @@
                                         Email : <?=$student->email?><br/>
                                         Tel : <?=$student->phone?><br/>
                                         Grade : <?=$student->grade?><br/>
-                                        Option : <?=$student->name?>
+                                        Department : <?=$student->name?>
                                     </p>
                                 </div>
                             </div>

@@ -49,6 +49,12 @@
                     </li>
 
                     <li class="dropdown">
+                        <a href="<?=site_url('student/view_course')?>" class="nav-link">
+                            <i class="fas fa-book-open"></i><span>Courses</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-book"></i><span>Books</span></a>
                         <ul class="dropdown-menu">
                             <li><a class="nav-link" href="<?=site_url('library/view_book')?>">All books</a></li>
