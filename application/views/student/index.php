@@ -92,12 +92,22 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <img src=<?=base_url('assets/img/users/user-3.png')?> class="img-fluid"/>
+                                    <?php
+                                        if($student->gender == 'male')
+                                        {
+                                            $pic_path = base_url('assets/img/users/user-3.png');
+                                        }else{
+                                            $pic_path = base_url('assets/img/users/user-1.png');
+
+                                        }
+                                    ?>
+                                    <img src=<?=$pic_path?> class="img-fluid"/>
                                 </div>
                                 <div class="col-md-6">
                                     <br>
                                     <h4><?=$student->fullname?></h4>
                                     <p>
+                                        Gender : <?=$student->gender=='male'?'M':'F';?><br>
                                         Email : <?=$student->email?><br/>
                                         Tel : <?=$student->phone?><br/>
                                         Grade : <?=$student->grade?><br/>

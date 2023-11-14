@@ -134,8 +134,16 @@
                             </div>
                         </div>
                     </li> -->
+                    <?php
+                        if($this->session->gender == 'male')
+                        {
+                            $pic_path = base_url('assets/img/users/user-3.png');
+                        }else{
+                            $pic_path = base_url('assets/img/users/user-1.png');
+                        }
+                    ?>
                     <li class="dropdown">
-                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png" class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src='<?=$pic_path?>' class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
                         <div class="dropdown-menu dropdown-menu-right pullDown">
                             <div class="dropdown-title"><?=$this->session->fullname?></div>
                             <a href="#" class="dropdown-item has-icon"> <i class="far

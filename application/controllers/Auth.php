@@ -53,6 +53,7 @@ class Auth extends CI_Controller
                     "fullname"=>$fullname,
                     "role"=>$role,
                     "email"=>$email,
+                    "gender" => $res[0]->gender,
                     "connected"=>true,                    
                 ];
     
