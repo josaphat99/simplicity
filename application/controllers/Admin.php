@@ -164,6 +164,23 @@ class Admin extends CI_Controller
         redirect('admin/view_option?grade_id='.$grade_id);
     }
 
+     //new grade
+     public function new_grade()
+     {
+         if($this->session->role != 'admin')
+         {
+            redirect('admin/restriction');
+         }
+ 
+         $this->Crud->add_data('grade',[
+             'grade' => $this->input->post('grade'),
+         ]);
+ 
+         $this->session->set_flashdata(['grade_added' => true]);
+ 
+         redirect('admin/view_grade');
+     }
+
     //==========STUDENTS=============
     //view students
     public function view_student()

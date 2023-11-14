@@ -44,7 +44,6 @@
                         <?php
                             }
                         ?>
-                        
                         <div class="card-header-action">
                             <a data-collapse="#test-collapse" class="btn btn-icon btn-info" href="#"><i
                             class="fas fa-minus"></i></a>
