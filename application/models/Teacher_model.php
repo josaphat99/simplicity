@@ -12,7 +12,7 @@ class Teacher_model extends CI_Model
                  ->join('account','course.teacher_id = account.id')
 				 ->order_by('assignment.id','DESC')
 				 ->limit($limit)
-				 ->where(['account.id'=>$teacher_id,'status'=>$status,'type'=>'assignment']);
+				 ->where(['account.id'=>$teacher_id,'status'=>$status,'type'=>'test']);
 		
 		return $this->db->get()->result();
 	}

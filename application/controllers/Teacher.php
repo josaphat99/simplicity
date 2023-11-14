@@ -31,7 +31,7 @@ class Teacher extends CI_Controller
 
         $teacher_id = $this->session->id;        
 
-        $ongoing_ass = $this->Teacher_model->join_assignment_course($teacher_id,'0',5);
+        $ongoing_ass = $this->Teacher_model->join_assignment_course($teacher_id,'0');
         $test = $this->Teacher_model->get_test_teacher($teacher_id,null,5);
         $course = $this->Teacher_model->get_course_teacher($teacher_id);
 

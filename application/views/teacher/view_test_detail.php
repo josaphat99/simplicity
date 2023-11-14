@@ -318,6 +318,7 @@
                                                             if($r->mark != null)
                                                             {
                                                                 $percent = $r->mark * 100 / $r->max_mark;
+                                                                $percent = explode('.',$percent)[0];
 
                                                                 if($percent >= 45 && $percent <= 54)
                                                                 {

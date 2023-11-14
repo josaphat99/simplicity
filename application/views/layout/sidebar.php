@@ -73,11 +73,11 @@
                         </a>
                     </li>
 
-                    <li class="dropdown">
+                    <!-- <li class="dropdown">
                         <a href="#" class="nav-link">
                             <i class="fas fa-book-reader"></i><span>Assignments</span>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="dropdown">
                         <a href="<?=site_url('teacher/list_term')?>" class="nav-link">

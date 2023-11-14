@@ -107,7 +107,8 @@
                                     {
                                         if($mark != null)
                                         {          
-                                        $mark_percent = $mark * 100 / $s->mark[$title.'_mark_'.$s->id_student];                              
+                                        $mark_percent = $mark * 100 / $s->mark[$title.'_mark_'.$s->id_student];   
+                                        $mark_percent = explode('.',$mark_percent)[0];                           
                                 ?>  
                                         <td><?=$mark_percent?></td>
                                 <?php                                        

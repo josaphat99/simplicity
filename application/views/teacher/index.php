@@ -32,7 +32,7 @@
                             <h3 class="font-light mb-0">
                                 <i class="ti-arrow-up text-succes"></i> <?=count($ongoing_ass)?>
                             </h3>
-                            <span class="text-muted">Ongoing Assignment</span>
+                            <span class="text-muted">Uncorrected tests</span>
                             </div>
                         </div>
                         </div>
@@ -77,7 +77,7 @@
             </div>
 
             <!-- ongoing assignment -->
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-lg-12 col-md-12 col-12 col-sm-12">
                 <div class="card">
                     <div class="card-header">
@@ -142,7 +142,7 @@
                     </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
                <!-- tests -->
             <div class="row">
