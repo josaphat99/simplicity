@@ -32,12 +32,19 @@
                             </a>&nbsp;&nbsp;
                         </div>
 
-                        <div class="card-header-action">
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newTestForm">
-                                <i class="fas fa-plus"></i>&nbsp; New Test
-                            </button>&nbsp;&nbsp;
-                        </div>
-
+                        <?php
+                            if($nb_test_term < 3)
+                            {
+                        ?>
+                                 <div class="card-header-action">
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newTestForm">
+                                        <i class="fas fa-plus"></i>&nbsp; New Test
+                                    </button>&nbsp;&nbsp;
+                                </div>
+                        <?php
+                            }
+                        ?>
+                        
                         <div class="card-header-action">
                             <a data-collapse="#test-collapse" class="btn btn-icon btn-info" href="#"><i
                             class="fas fa-minus"></i></a>
@@ -73,9 +80,9 @@
                                             <td>
                                                 <a href="<?=site_url('teacher/view_test_detail?test_id='.$t->id)?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
                                                     class="fas fa-eye"></i></a>
-                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
+                                                <!-- <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
                                                 data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
-                                                data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                                                data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a> -->
                                             </td>
                                         </tr>
                                         <?php
@@ -145,12 +152,12 @@
                     </div>
                     
                     <!--Max mark-->
-                    <div class="form-group row mb-4">
+                    <!-- <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-2 col-lg-2">Max</label>
                         <div class="col-sm-12 col-md-10">
                             <input type="number" class="form-control" name="max_mark">
                         </div>
-                    </div>
+                    </div> -->
                     
                     <!--Date-->
                     <div class="form-group row mb-4">

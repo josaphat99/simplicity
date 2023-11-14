@@ -142,12 +142,14 @@ class Teacher extends CI_Controller
         $term = $this->Crud->get_data('term',['id'=>$term_id])[0]->term;
         $test = $this->Teacher_model->get_test_teacher($teacher_id,$term_id);
         $course = $this->Teacher_model->get_course_teacher($teacher_id);
-
+        $nb_test_term = count($this->Crud->get_data('assignment',['term_id'=>$term_id]));
+        
         $d = [
             'term_id' => $term_id,
             'term' => $term,
             'test' => $test,   
             'course' => $course,
+            'nb_test_term' => $nb_test_term
         ];
 
         $this->load->view('teacher/list_test',$d);
@@ -294,21 +296,47 @@ class Teacher extends CI_Controller
     //new test
     public function new_test()
     {
-    $term_id = $this->input->post('term_id');
+        $term_id = $this->input->post('term_id');
 
-        $d = [
-            'title' => $this->input->post('title'),
-            'course_id' => $this->input->post('course_id'),
-            'description' => $this->input->post('description'),
-            'start_date' => $this->input->post('date'),
-            'max_mark' => $this->input->post('max_mark'),
-            'term_id' => $term_id,
-            'type' => 'test'
-        ];
+        /**
+         * Check number of tests that came before
+         * determine the max_mark
+         * if the nb is 3 don't add the test
+         */
 
-        $this->Crud->add_data('assignment',$d);
+        $nb_test_term = $this->Crud->get_data('assignment',['term_id'=>$term_id]);
+        $max_mark = 0;
+        $add_test = false;
 
-        $this->session->set_flashdata(['test_added'=>true]);
+        if(count($nb_test_term) <= 1)
+        {
+            $max_mark = 20;
+            $add_test = true;
+        }else if(count($nb_test_term) == 2){
+            $max_mark = 60;
+            $add_test = true;
+        }else{
+            $add_test = false;
+        }
+
+        if($add_test)
+        {
+            $d = [
+                'title' => $this->input->post('title'),
+                'course_id' => $this->input->post('course_id'),
+                'description' => $this->input->post('description'),
+                'start_date' => $this->input->post('date'),
+                'max_mark' => $max_mark,
+                'term_id' => $term_id,
+                'type' => 'test'
+            ];
+    
+            $this->Crud->add_data('assignment',$d);
+    
+            $this->session->set_flashdata(['test_added'=>true]);
+        }else{
+            $this->session->set_flashdata(['test_not_added'=>true]);
+        }     
 
         redirect('teacher/list_test?term_id='.$term_id);
     }
