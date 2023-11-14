@@ -26,6 +26,13 @@
                     <div class="card-header">
                         <h4><?=$term?></h4>
                         <div class="card-header-action">
+                            <a href="<?=site_url('teacher/mark_schedule?term_id='.$term_id)?>" type="button" class="btn btn-info">
+                            <i class="fas fa-book"></i>&nbsp;
+                                View Mark Schedule
+                            </a>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="card-header-action">
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newTestForm">
                                 <i class="fas fa-plus"></i>&nbsp; New Test
                             </button>&nbsp;&nbsp;

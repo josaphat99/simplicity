@@ -291,27 +291,27 @@ class Teacher extends CI_Controller
         $this->load->view('layout/js');
     }
 
-     //new test
-     public function new_test()
-     {
-        $term_id = $this->input->post('term_id');
+    //new test
+    public function new_test()
+    {
+    $term_id = $this->input->post('term_id');
 
-         $d = [
-             'title' => $this->input->post('title'),
-             'course_id' => $this->input->post('course_id'),
-             'description' => $this->input->post('description'),
-             'start_date' => $this->input->post('date'),
-             'max_mark' => $this->input->post('max_mark'),
-             'term_id' => $term_id,
-             'type' => 'test'
-         ];
- 
-         $this->Crud->add_data('assignment',$d);
- 
-         $this->session->set_flashdata(['test_added'=>true]);
- 
-         redirect('teacher/list_test?term_id='.$term_id);
-     }
+        $d = [
+            'title' => $this->input->post('title'),
+            'course_id' => $this->input->post('course_id'),
+            'description' => $this->input->post('description'),
+            'start_date' => $this->input->post('date'),
+            'max_mark' => $this->input->post('max_mark'),
+            'term_id' => $term_id,
+            'type' => 'test'
+        ];
+
+        $this->Crud->add_data('assignment',$d);
+
+        $this->session->set_flashdata(['test_added'=>true]);
+
+        redirect('teacher/list_test?term_id='.$term_id);
+    }
 
     //record points
      public function record_point()
@@ -358,5 +358,68 @@ class Teacher extends CI_Controller
         }
  
         redirect('teacher/view_test_detail?test_id='.$test_id);
+    }
+
+    //mark schedule
+    public function mark_schedule()
+    {
+        $term_id = $this->input->get('term_id');
+        $term = $this->Crud->get_data('term',['id'=>$term_id])[0]->term;
+        $teacher_name = $this->Crud->get_data('account',['id'=>$this->session->id])[0]->fullname;
+
+        $test_term = $this->Teacher_model->test_term($term_id); //all tests of a term
+        $student = $this->Crud->join_account_student(); //all students
+        
+        $student_tab = [];
+        
+        // var_dump($student);die();
+
+        foreach($test_term as $t)
+        {
+            foreach($student as $s)
+            {   
+                //we colect the point for test $t for each student
+                $res = $this->Teacher_model->result_test($t->id,$s->id_student);
+                
+                if(count($res) > 0)
+                {
+                    $s->tab[$t->title] = $res[0]->mark;
+                    $s->mark[$t->title.'_mark_'.$s->id_student] = $t->max_mark;
+
+                    if(!in_array($s->id_student,$student_tab))
+                    {
+                        array_push($student_tab,$s->id_student);
+                    }
+                }
+            }          
+        }
+
+        $d = [
+            'test_term' => $test_term,
+            'term' => $term,
+            'teacher_name' => $teacher_name,  
+            'student' => $student,
+            'student_tab' => $student_tab,
+        ];
+
+        $this->load->view('teacher/mark_schedule',$d);
+        $this->load->view('layout/footer');
+        $this->load->view('layout/js');
+
+        // foreach($student as $s)
+        // {
+        //     $res = $this->Teacher_model->result_test($t->id,$s->id_student);
+            
+        //     if(count($res) > 0)
+        //     {
+        //         echo $s->fullname.' : ';
+
+        //         foreach ($s->tab as $title => $mark) {
+        //             echo $title.' => '.$mark.', ';
+        //         }
+        //         echo '<br/>';
+        //     }
+        // }
+        // die();
     }
 }

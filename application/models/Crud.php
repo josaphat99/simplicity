@@ -49,13 +49,18 @@ class Crud extends CI_Model
 
 	//join account and student
 
-	public function join_account_student($option_id)
+	public function join_account_student($option_id=null)
 	{
 		$this->db->select("*, account.id as id, student.id as id_student")
 				 ->from('account')
 				 ->join('student','account.student_id = student.id')
 				 ->order_by('account.id','DESC')
-				 ->where(['role'=>'student','student.option_id'=>$option_id]);
+				 ->where(['role'=>'student']);
+
+				if($option_id != null)
+				{
+					$this->db->where(['role'=>'student','student.option_id'=>$option_id]);
+				}				
 		
 		return $this->db->get()->result();
 	}

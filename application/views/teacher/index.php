@@ -243,7 +243,7 @@
                                                 foreach($course as $c)
                                                 {
                                             ?>  
-                                            <tr>                                  
+                                            <tr class="text-center">                                  
                                                 <td><?=$c->title?></td>
                                                 <td><?=$c->name?></td>
                                                 <td><?=$c->grade?></td>
