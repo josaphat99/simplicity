@@ -395,7 +395,7 @@ class Teacher extends CI_Controller
         $term = $this->Crud->get_data('term',['id'=>$term_id])[0]->term;
         $teacher_name = $this->Crud->get_data('account',['id'=>$this->session->id])[0]->fullname;
 
-        $test_term = $this->Teacher_model->test_term($term_id); //all tests of a term
+        $test_term = $this->Teacher_model->test_term($term_id,$this->session->id); //all tests of a term
         $student = $this->Crud->join_account_student(); //all students
         
         $student_tab = [];

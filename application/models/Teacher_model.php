@@ -119,7 +119,7 @@ class Teacher_model extends CI_Model
 	}
 
 	//get tests of a term
-	public function test_term($term_id)
+	public function test_term($term_id,$teacher_id)
 	{ 
 		$this->db->select("*, assignment.id as id,assignment.title as title, course.id as id_course,course.title as course_title,option.name as department")
 				->from('assignment')
@@ -128,7 +128,7 @@ class Teacher_model extends CI_Model
 				->join('grade','option.grade_id = grade.id')
 				->join('term','assignment.term_id = term.id')
 				->join('year','term.year_id = year.id')
-				->where(['assignment.term_id'=>$term_id]);					
+				->where(['assignment.term_id'=>$term_id,'course.teacher_id'=>$teacher_id]);					
 		
 		return $this->db->get()->result();
 	}

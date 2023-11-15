@@ -416,10 +416,12 @@ class Admin extends CI_Controller
         if(count($_POST) <= 0)
         {
             $account_id = $this->input->get('account_id');
+            $option_id = $this->input->get('option_id');
             $account = $this->Crud->get_data('account',['id'=>$account_id])[0];
     
             $d = [
                 'account' => $account,
+                'option_id' => $option_id
             ];
     
             $this->load->view('admin/edit_account',$d);
@@ -428,6 +430,7 @@ class Admin extends CI_Controller
         }else{
 
             $account_id = $this->input->post('account_id');
+            $option_id = $this->input->post('option_id');
 
             $fullname = $this->input->post('fullname');
             $email = $this->input->post('email');
@@ -449,20 +452,31 @@ class Admin extends CI_Controller
             $this->Crud->update_data('account',['id'=>$account_id],$d);
 
             $this->session->set_flashdata(['user_edited' => true]);
-            redirect('admin/index');
-        }
 
-       
+            if($option_id != null)
+            {
+                redirect('admin/view_student?option_id='.$option_id);
+            }else{
+                redirect('admin/index');
+            }            
+        }       
     }
 
     // delete user
     public function delete_user()
     {
         $user_id = $this->input->post("user_id");
+        $id_student = $this->input->post("id_student");
 
         $this->Crud->delete_data('account',['id'=>$user_id]);
 
         $this->session->set_flashdata(['user_deleted' => true]);
-        redirect('admin/index');
+
+        if($id_student !=null)
+        {
+            redirect('admin/view_student?option_id='.$option_id);
+        }else{
+            redirect('admin/index');
+        }        
     }
 }

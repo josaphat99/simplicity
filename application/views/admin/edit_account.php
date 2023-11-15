@@ -74,6 +74,7 @@
                                 </div>
                                 <input type="hidden" name="role" value="<?=$account->role?>">
                                 <input type="hidden" name="account_id" value="<?=$account->id?>">
+                                <input type="hidden" name="option_id" value="<?=$option_id?>">
                                 <button type="submit" class="btn btn-primary m-t-15 waves-effect">SAVE</button>
                             </form>
                         </div>
