@@ -117,6 +117,8 @@
                                             <?php
                                                 }else if($this->session->role == 'student')
                                                 {
+                                                    if($request != null)
+                                                    {                                                    
                                                     if($request->status == 0){
                                                         if($request->user_id == $this->session->id){
                                                 ?>
@@ -149,6 +151,11 @@
 
                                                         <?php
                                                     }
+                                                }else{
+                                            ?>
+                                                    <p class="alert alert-info text-center text-white">No request has been made so far!</p>
+                                            <?php
+                                                }
                                             ?>                                                
                                             <?php
                                                 }
