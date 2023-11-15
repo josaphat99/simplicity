@@ -409,4 +409,60 @@ class Admin extends CI_Controller
 
         redirect('admin/view_event');
     }
+
+    //===========Actors Crud==========
+    public function edit_account()
+    {
+        if(count($_POST) <= 0)
+        {
+            $account_id = $this->input->get('account_id');
+            $account = $this->Crud->get_data('account',['id'=>$account_id])[0];
+    
+            $d = [
+                'account' => $account,
+            ];
+    
+            $this->load->view('admin/edit_account',$d);
+            $this->load->view('layout/footer');
+            $this->load->view('layout/js');
+        }else{
+
+            $account_id = $this->input->post('account_id');
+
+            $fullname = $this->input->post('fullname');
+            $email = $this->input->post('email');
+            $phone = $this->input->post('phone');
+            $gender = $this->input->post('gender');
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');            
+    
+            $d = [
+                'fullname' => $fullname,
+                'email' => $email,
+                'phone' => $phone,
+                'gender' => $gender,
+                'username' => $username,
+                'password' => $password,
+                'role' => $this->input->post('role')
+            ];
+
+            $this->Crud->update_data('account',['id'=>$account_id],$d);
+
+            $this->session->set_flashdata(['user_edited' => true]);
+            redirect('admin/index');
+        }
+
+       
+    }
+
+    // delete user
+    public function delete_user()
+    {
+        $user_id = $this->input->post("user_id");
+
+        $this->Crud->delete_data('account',['id'=>$user_id]);
+
+        $this->session->set_flashdata(['user_deleted' => true]);
+        redirect('admin/index');
+    }
 }

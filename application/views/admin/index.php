@@ -12,6 +12,34 @@
         </script>
 <?php
     $this->session->user_added = null;
+    } 
+    if(($this->session->user_edited))
+    {
+?>
+        <script>
+            Swal.fire({            
+            icon: 'success',
+            title: 'User Edited successfully!',
+            showConfirmButton: false,
+            timer: 3000
+            })
+        </script>
+<?php
+    $this->session->user_edited = null;
+    }
+    if(($this->session->user_deleted))
+    {
+?>
+        <script>
+            Swal.fire({            
+            icon: 'success',
+            title: 'User Deleted successfully!',
+            showConfirmButton: false,
+            timer: 3000
+            })
+        </script>
+<?php
+    $this->session->user_deleted = null;
     }
 ?>
 
@@ -133,11 +161,15 @@
                                         <td><?=$t->phone?></td>
                                         <td><?=$t->gender?></td>
                                         <td>
-                                            <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
-                                                class="fas fa-eye"></i></a>
-                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
-                                            data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
-                                            data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                                            <a href="<?=site_url('admin/edit_account?account_id='.$t->id)?>" class="btn btn-success btn-action mr-1" data-toggle="tooltip" title="Edit"><i
+                                                class="fas fa-pen"></i></a>
+
+                                            <form action="<?=site_url('admin/delete_user')?>" method="post" id="<?='form_delete_'.$t->id?>" style="float:right;margin-left:-70px">
+                                                <input type="hidden" value="<?=$t->id?>" name="user_id" hidden>
+                                                <button class="btn btn-danger btn_delete" type="submit" id="<?='btn_delete-'.$t->id?>">
+                                                    <i class="fas fa-trash-alt btn_delete" id="<?='icon_delete-'.$t->id?>"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     <?php
@@ -192,11 +224,15 @@
                                             <td><?=$f->phone?></td>
                                             <td><?=$f->gender?></td>
                                             <td>
-                                                <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
-                                                    class="fas fa-eye"></i></a>
-                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
-                                                data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
-                                                data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                                                <a href="<?=site_url('admin/edit_account?account_id='.$f->id)?>" class="btn btn-success btn-action mr-1" data-toggle="tooltip" title="Edit"><i
+                                                    class="fas fa-pen"></i></a>
+
+                                                <form action="<?=site_url('admin/delete_user')?>" method="post" id="<?='form_delete_'.$f->id?>" style="float:right;margin-left:-70px">
+                                                    <input type="hidden" value="<?=$f->id?>" name="user_id" hidden>
+                                                    <button class="btn btn-danger btn_delete" type="submit" id="<?='btn_delete-'.$f->id?>">
+                                                        <i class="fas fa-trash-alt btn_delete" id="<?='icon_delete-'.$f->id?>"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         <?php
@@ -249,11 +285,15 @@
                                             <td><?=$l->phone?></td>
                                             <td><?=$l->gender?></td>
                                             <td>
-                                                <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="View"><i
-                                                    class="fas fa-eye"></i></a>
-                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"
-                                                data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
-                                                data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
+                                                <a href="<?=site_url('admin/edit_account?account_id='.$l->id)?>" class="btn btn-success btn-action mr-1" data-toggle="tooltip" title="Edit"><i
+                                                    class="fas fa-pen"></i></a>
+
+                                                <form action="<?=site_url('admin/delete_user')?>" method="post" id="<?='form_delete_'.$l->id?>" style="float:right;margin-left:-70px">
+                                                    <input type="hidden" value="<?=$l->id?>" name="user_id" hidden>
+                                                    <button class="btn btn-danger btn_delete" type="submit" id="<?='btn_delete-'.$l->id?>">
+                                                        <i class="fas fa-trash-alt btn_delete" id="<?='icon_delete-'.$l->id?>"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         <?php
@@ -521,3 +561,33 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+<script>
+    $(".btn_delete").click(function(e){
+        e.preventDefault();
+        
+        var id = e.target.getAttribute('id').split('-')[1];            
+
+        Swal.fire({
+        title: 'Do you realy want to delete this User?',
+        text: "You won't be able to undo this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire(
+                'Deleted!',
+                'User deleted.',
+                'success'
+                )
+                $("#form_delete_"+id).submit();
+            }
+        })
+    })
+</script>
