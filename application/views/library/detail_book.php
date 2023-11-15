@@ -154,6 +154,8 @@
                                                 }else{
                                             ?>
                                                     <p class="alert alert-info text-center text-white">No request has been made so far!</p>
+                                                    <a href=<?=site_url('student/request_book?book_id='.$book->id)?> class="btn btn-success">Request this book</a>
+
                                             <?php
                                                 }
                                             ?>                                                
