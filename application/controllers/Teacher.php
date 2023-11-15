@@ -297,14 +297,14 @@ class Teacher extends CI_Controller
     public function new_test()
     {
         $term_id = $this->input->post('term_id');
-
+        $teacher_id = $this->session->id;
         /**
          * Check number of tests that came before
          * determine the max_mark
          * if the nb is 3 don't add the test
          */
 
-        $nb_test_term = $this->Crud->get_data('assignment',['term_id'=>$term_id]);
+        $nb_test_term = $this->Teacher_model->get_test_teacher($teacher_id,$term_id);
         $max_mark = 0;
         $add_test = false;
 
