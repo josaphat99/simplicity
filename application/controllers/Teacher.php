@@ -142,7 +142,7 @@ class Teacher extends CI_Controller
         $term = $this->Crud->get_data('term',['id'=>$term_id])[0]->term;
         $test = $this->Teacher_model->get_test_teacher($teacher_id,$term_id);
         $course = $this->Teacher_model->get_course_teacher($teacher_id); // for adding a new test
-        $nb_test_term = count($this->Crud->get_data('assignment',['term_id'=>$term_id]));
+        $nb_test_term = count($this->Teacher_model->test_term($term_id,$this->session->id));
         
         $d = [
             'term_id' => $term_id,
