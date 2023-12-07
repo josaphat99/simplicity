@@ -342,7 +342,7 @@ class Teacher extends CI_Controller
     }
 
     //record points
-     public function record_point()
+    public function record_point()
     {
         $test_id = $this->input->post('test_id');        
 
